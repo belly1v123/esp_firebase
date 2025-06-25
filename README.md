@@ -1,20 +1,20 @@
-# 🔥 ESP32 Firebase Realtime Monitoring and Control
+#  ESP32 Firebase Realtime Monitoring and Control
 
 This project uses an **ESP32** microcontroller to monitor an **LDR (light sensor)** and control **LEDs** through a **Firebase Realtime Database**, with a simple **web interface** built using HTML, CSS, and JavaScript.
 
 ---
 
-## 🚀 Features
+##  Features
 
-- ✅ Real-time **LDR value and voltage** logging to Firebase
-- 💡 Control **LEDs remotely** (digital on/off and analog brightness)
-- 📶 ESP32 **presence detection**: shows online/offline status on the web app
-- 🌐 Clean Firebase-integrated web dashboard
-- 🔒 Secure with Firebase Database Rules
+-  Real-time **LDR value and voltage** logging to Firebase
+-  Control **LEDs remotely** (digital on/off and analog brightness)
+-  ESP32 **presence detection**: shows online/offline status on the web app
+-  Clean Firebase-integrated web dashboard
+-  Secure with Firebase Database Rules
 
 ---
 
-## 🧰 Tech Stack
+##  Tech Stack
 
 - **ESP32** (Arduino/C++)
 - **Firebase Realtime Database**
@@ -23,7 +23,7 @@ This project uses an **ESP32** microcontroller to monitor an **LDR (light sensor
 
 ---
 
-## 🔌 Hardware Requirements
+## Hardware Requirements
 
 - ESP32 Dev Board  
 - 1x LDR + Resistor (for voltage divider)
