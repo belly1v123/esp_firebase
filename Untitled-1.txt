@@ -1,0 +1,3 @@
+https://pk-esp32-rtdb-default-rtdb.asia-southeast1.firebasedatabase.app/
+
+// api key: something
