@@ -5,7 +5,7 @@ const espStatus = document.getElementById("espStatus");
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCz6wSWlAj3TVCGNpIgQCXwnP33qZ8X31U",
+  apiKey: "your key",
   databaseURL: "https://pk-esp32-rtdb-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
