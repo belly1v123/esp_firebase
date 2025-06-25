@@ -6,8 +6,8 @@
 // WiFi & Firebase Credentials
 #define WIFI_SSID "Pranjal_2.4"
 #define WIFI_PASSWORD "PK@98400"
-#define API_KEY "something" // Replace with your Firebase API Key
-#define DATABASE_URL "use your Firebase Realtime Database URL" // Replace with your Firebase Realtime Database URL
+#define API_KEY "AIzaSyCz6wSWlAj3TVCGNpIgQCXwnP33qZ8X31U"
+#define DATABASE_URL "https://pk-esp32-rtdb-default-rtdb.asia-southeast1.firebasedatabase.app/"
 
 // GPIO Definitions
 #define LED_ANALOG_PIN 12  // For ledcWrite()
@@ -106,4 +106,5 @@ void loop()
       Serial.println("Digital LED: " + String(ledStatus ? "ON" : "OFF"));
     }
   }
+
 }
