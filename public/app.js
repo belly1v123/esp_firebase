@@ -13,9 +13,9 @@ const toggleSwitch = document.getElementById("toggleSwitch");
 
 // ✅ Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCz6wSWlAj3TVCGNpIgQCXwnP33qZ8X31U",
+  apiKey: "your key",
   authDomain: "pk-esp32-rtdb.firebaseapp.com",
-  databaseURL: "https://pk-esp32-rtdb-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL: "https://yourDatabaseURL",
   projectId: "pk-esp32-rtdb",
   storageBucket: "pk-esp32-rtdb.appspot.com",
   messagingSenderId: "249358123401",
