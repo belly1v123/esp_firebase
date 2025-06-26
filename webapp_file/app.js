@@ -2,6 +2,7 @@
 const ldrValue = document.getElementById("ldrValue");
 const voltageValue = document.getElementById("voltageValue");
 const espStatus = document.getElementById("espStatus");
+const lastSeenDisplay = document.getElementById("lastSeen");
 
 
 const firebaseConfig = {
@@ -61,3 +62,32 @@ db.ref("Sensor/voltage").on("value", snapshot => {
 
 
 
+const OFFLINE_THRESHOLD = 30; // seconds
+function checkESPStatus() {
+  const lastSeenRef = db.ref("/device/last_seen");
+
+  lastSeenRef.on("value", (snapshot) => {
+    if (!snapshot.exists()) {
+      console.log("❌ No last_seen found in DB");
+      espStatus.innerText = "❌ No data found";
+      espStatus.style.color = "gray";
+      return;
+    }
+
+    const lastSeen = snapshot.val();
+    const now = Math.floor(Date.now() / 1000);
+    const diff = now - lastSeen;
+
+    if (diff < 30) {
+      espStatus.innerText = "✅ ESP32 is Online";
+      espStatus.style.color = "green";
+    } else {
+      espStatus.innerText = "🚫 ESP32 is Offline";
+      espStatus.style.color = "red";
+    }
+
+    lastSeenDisplay.innerText = "🕒 Last Seen: " + new Date(lastSeen * 1000).toLocaleString();
+  });
+}
+
+checkESPStatus();

@@ -2,6 +2,7 @@
 #include <Firebase_ESP_Client.h>
 #include "addons/TokenHelper.h"
 #include "addons/RTDBHelper.h"
+#include <time.h>
 
 // WiFi & Firebase Credentials
 #define WIFI_SSID "Pranjal_2.4"
@@ -61,6 +62,18 @@ void setup()
 
   Firebase.begin(&config, &auth);
   Firebase.reconnectWiFi(true);
+
+  // Configure NTP time
+  configTime(0, 0, "pool.ntp.org");
+  struct tm timeinfo;
+
+  Serial.print("Syncing NTP time");
+  while (!getLocalTime(&timeinfo))
+  {
+    Serial.print(".");
+    delay(500);
+  }
+  Serial.println("\nTime synchronized.");
 }
 
 void loop()
@@ -71,6 +84,17 @@ void loop()
 
     int ldrData = analogRead(LDR_PIN);
     float voltage = (float)analogReadMilliVolts(LDR_PIN) / 1000;
+
+    // 🔴 SEND DEVICE "last seen" TIMESTAMP
+    time_t now = time(nullptr); // Get current Unix timestamp from NTP
+    if (Firebase.RTDB.setInt(&fbdo, "/device/last_seen", now))
+    {
+      Serial.println("✅ Last seen updated: " + String(now));
+    }
+    else
+    {
+      Serial.println("❌ Failed to update last seen: " + fbdo.errorReason());
+    }
 
     // Send LDR data
     if (Firebase.RTDB.setInt(&fbdo, "Sensor/ldr_data", ldrData))
@@ -106,5 +130,4 @@ void loop()
       Serial.println("Digital LED: " + String(ledStatus ? "ON" : "OFF"));
     }
   }
-
 }
