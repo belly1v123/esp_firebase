@@ -1,6 +1,11 @@
 // Firebase v9 Modular SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set
+} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
 // ✅ Your Firebase configuration
 const firebaseConfig = {
@@ -13,18 +18,64 @@ const firebaseConfig = {
   appId: "1:249358123401:web:89677df379d07f11d3ae2e"
 };
 
-// ✅ Initialize Firebase and DB
+// ✅ Initialize Firebase and Realtime Database
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 // ✅ DOM elements
 const espStatus = document.getElementById("espStatus");
+const toggleBtn = document.getElementById("toggleBtn");
+const pwmSlider = document.getElementById("pwmSlider");
+const digitalStatus = document.getElementById("digitalStatus");
+const pwmValue = document.getElementById("pwmValue");
+const ldrValue = document.getElementById("ldrValue");
+const voltageValue = document.getElementById("voltageValue");
 
+let ledState = false;
+
+// 🟢 Toggle LED (digital)
+toggleBtn.onclick = () => {
+  ledState = !ledState;
+  set(ref(db, "LED/digital"), ledState);
+};
+
+// 🔁 Listen for LED digital status
+onValue(ref(db, "LED/digital"), snapshot => {
+  const val = snapshot.val();
+  ledState = val;
+  digitalStatus.innerText = `Status: ${val ? "ON" : "OFF"}`;
+});
+
+// 🔧 Handle PWM slider input
+pwmSlider.oninput = () => {
+  const value = parseInt(pwmSlider.value);
+  set(ref(db, "LED/analog"), value);
+  pwmValue.innerText = `PWM: ${value}`;
+};
+
+// 🔁 Sync slider value from Firebase
+onValue(ref(db, "LED/analog"), snapshot => {
+  const val = snapshot.val();
+  pwmSlider.value = val;
+  pwmValue.innerText = `PWM: ${val}`;
+});
+
+// 🌞 LDR sensor value
+onValue(ref(db, "Sensor/ldr_data"), snapshot => {
+  const val = snapshot.val();
+  ldrValue.innerText = `LDR: ${val}`;
+});
+
+// 🔋 Voltage value
+onValue(ref(db, "Sensor/voltage"), snapshot => {
+  const val = snapshot.val();
+  voltageValue.innerText = `Voltage: ${val.toFixed(2)} V`;
+});
+
+// 🔄 Online/Offline status
 const OFFLINE_THRESHOLD = 45; // seconds
-
-// ✅ Check ESP32 Online/Offline status
 function checkESPStatus() {
-  const lastSeenRef = ref(db, "/device/last_seen");
+  const lastSeenRef = ref(db, "device/last_seen");
 
   onValue(lastSeenRef, (snapshot) => {
     if (!snapshot.exists()) {
@@ -41,7 +92,7 @@ function checkESPStatus() {
       espStatus.innerText = "✅ ESP32 is Online";
       espStatus.style.color = "green";
     } else {
-      espStatus.innerText = "🚫 ESP32 is Offline ask pranjal kharel to check";
+      espStatus.innerText = "🚫 ESP32 is Offline";
       espStatus.style.color = "red";
     }
   });

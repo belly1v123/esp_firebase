@@ -27,18 +27,19 @@
 
   <h2>ESP32 LED Controller</h2>
 
-  <!-- Digital Toggle -->
-  <button id="toggleBtn">Toggle LED</button>
-  <div class="status" id="digitalStatus">Status: OFF</div>
+<!-- Toggle Button -->
+<button id="toggleBtn">Toggle LED</button>
+<p id="digitalStatus">Status: OFF</p>
 
-  <!-- Analog PWM Control -->
-  <h3>Analog Brightness</h3>
-  <input type="range" min="0" max="255" id="pwmSlider">
-  <div id="pwmValue">PWM: 0</div>
+<!-- PWM Control -->
+<h3>Analog PWM</h3>
+<input type="range" id="pwmSlider" min="0" max="255" />
+<p id="pwmValue">PWM: 0</p>
 
-  <h3>LDR Sensor Readings</h3>
-  <div id="ldrValue">LDR: --</div>
-  <div id="voltageValue">Voltage: -- V</div>
+<!-- Sensor Values -->
+<h3>LDR Sensor</h3>
+<p id="ldrValue">LDR: --</p>
+<p id="voltageValue">Voltage: -- V</p>
 
   <div class="status">
     <p id="espStatus">🔄 Checking ESP32 status...</p>
