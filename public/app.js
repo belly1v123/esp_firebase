@@ -92,10 +92,10 @@ function checkESPStatus() {
     const diff = now - lastSeen;
 
     if (diff < OFFLINE_THRESHOLD) {
-      espStatus.innerText = "✅ ESP32 is Online";
+      espStatus.innerText = "ESP32 is Online";
       espStatus.style.color = "green";
     } else {
-      espStatus.innerText = "🚫 ESP32 is Offline";
+      espStatus.innerText = "ESP32 is Offline for " + diff + " seconds ask Pranjal Kharel to connect it.";
       espStatus.style.color = "red";
     }
   });
