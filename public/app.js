@@ -41,7 +41,7 @@ function checkESPStatus() {
       espStatus.innerText = "✅ ESP32 is Online";
       espStatus.style.color = "green";
     } else {
-      espStatus.innerText = "🚫 ESP32 is Offline";
+      espStatus.innerText = "🚫 ESP32 is Offline ask pranjal kharel to check";
       espStatus.style.color = "red";
     }
   });
