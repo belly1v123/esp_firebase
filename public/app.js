@@ -7,6 +7,10 @@ import {
   set
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
+
+const toggleSwitch = document.getElementById("toggleSwitch");
+
+
 // ✅ Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCz6wSWlAj3TVCGNpIgQCXwnP33qZ8X31U",
@@ -34,17 +38,10 @@ const voltageValue = document.getElementById("voltageValue");
 let ledState = false;
 
 // 🟢 Toggle LED (digital)
-toggleBtn.onclick = () => {
-  ledState = !ledState;
-  set(ref(db, "LED/digital"), ledState);
+toggleSwitch.onchange = () => {
+  const state = toggleSwitch.checked;
+  set(ref(db, "LED/digital"), state);
 };
-
-// 🔁 Listen for LED digital status
-onValue(ref(db, "LED/digital"), snapshot => {
-  const val = snapshot.val();
-  ledState = val;
-  digitalStatus.innerText = `Status: ${val ? "ON" : "OFF"}`;
-});
 
 // 🔧 Handle PWM slider input
 pwmSlider.oninput = () => {
@@ -58,6 +55,12 @@ onValue(ref(db, "LED/analog"), snapshot => {
   const val = snapshot.val();
   pwmSlider.value = val;
   pwmValue.innerText = `PWM: ${val}`;
+});
+
+onValue(ref(db, "LED/digital"), snapshot => {
+  const val = snapshot.val();
+  toggleSwitch.checked = val;
+  digitalStatus.innerText = `Status: ${val ? "ON" : "OFF"}`;
 });
 
 // 🌞 LDR sensor value
@@ -99,3 +102,12 @@ function checkESPStatus() {
 }
 
 checkESPStatus();
+
+
+
+
+
+
+
+
+
