@@ -1,63 +1,50 @@
-// Firebase config
-const ldrValue = document.getElementById("ldrValue");
-const voltageValue = document.getElementById("voltageValue");
+// Firebase v9 Modular SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+// ✅ Your Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCz6wSWlAj3TVCGNpIgQCXwnP33qZ8X31U",
+  authDomain: "pk-esp32-rtdb.firebaseapp.com",
+  databaseURL: "https://pk-esp32-rtdb-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "pk-esp32-rtdb",
+  storageBucket: "pk-esp32-rtdb.appspot.com",
+  messagingSenderId: "249358123401",
+  appId: "1:249358123401:web:89677df379d07f11d3ae2e"
+};
+
+// ✅ Initialize Firebase and DB
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// ✅ DOM elements
 const espStatus = document.getElementById("espStatus");
 
+const OFFLINE_THRESHOLD = 45; // seconds
 
-const firebaseConfig = {
-  apiKey: "your key",
-  databaseURL: "https://pk-esp32-rtdb-default-rtdb.asia-southeast1.firebasedatabase.app/"
-};
+// ✅ Check ESP32 Online/Offline status
+function checkESPStatus() {
+  const lastSeenRef = ref(db, "/device/last_seen");
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+  onValue(lastSeenRef, (snapshot) => {
+    if (!snapshot.exists()) {
+      espStatus.innerText = "❌ No status available";
+      espStatus.style.color = "gray";
+      return;
+    }
 
-// DOM Elements
-const toggleBtn = document.getElementById("toggleBtn");
-const pwmSlider = document.getElementById("pwmSlider");
-const digitalStatus = document.getElementById("digitalStatus");
-const pwmValue = document.getElementById("pwmValue");
+    const lastSeen = snapshot.val();
+    const now = Math.floor(Date.now() / 1000);
+    const diff = now - lastSeen;
 
-let ledState = false;
+    if (diff < OFFLINE_THRESHOLD) {
+      espStatus.innerText = "✅ ESP32 is Online";
+      espStatus.style.color = "green";
+    } else {
+      espStatus.innerText = "🚫 ESP32 is Offline";
+      espStatus.style.color = "red";
+    }
+  });
+}
 
-// Handle LED toggle
-toggleBtn.onclick = () => {
-  ledState = !ledState;
-  db.ref("LED/digital").set(ledState);
-};
-
-// Listen for changes in LED state
-db.ref("LED/digital").on("value", snapshot => {
-  const val = snapshot.val();
-  ledState = val;
-  digitalStatus.innerText = `Status: ${val ? "ON" : "OFF"}`;
-});
-
-// PWM Slider input
-pwmSlider.oninput = () => {
-  const value = parseInt(pwmSlider.value);
-  db.ref("LED/analog").set(value);
-  pwmValue.innerText = `PWM: ${value}`;
-};
-
-// Sync slider value with Firebase
-db.ref("LED/analog").on("value", snapshot => {
-  const val = snapshot.val();
-  pwmSlider.value = val;
-  pwmValue.innerText = `PWM: ${val}`;
-});
-// Listen for LDR value changes
-db.ref("Sensor/ldr_data").on("value", snapshot => {
-  const val = snapshot.val();
-  ldrValue.innerText = `LDR: ${val}`;
-});
-
-// Listen for voltage value changes
-db.ref("Sensor/voltage").on("value", snapshot => {
-  const val = snapshot.val();
-  voltageValue.innerText = `Voltage: ${val.toFixed(2)} V`;
-});
-
-
-
+checkESPStatus();

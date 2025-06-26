@@ -7,7 +7,7 @@
 // WiFi & Firebase Credentials
 #define WIFI_SSID "Pranjal_2.4"
 #define WIFI_PASSWORD "PK@98400"
-#define API_KEY "your key" //update key
+#define API_KEY "AIzaSyCz6wSWlAj3TVCGNpIgQCXwnP33qZ8X31U"
 #define DATABASE_URL "https://pk-esp32-rtdb-default-rtdb.asia-southeast1.firebasedatabase.app/"
 
 // GPIO Definitions
