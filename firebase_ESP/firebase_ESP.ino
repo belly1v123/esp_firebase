@@ -5,8 +5,8 @@
 #include <time.h>
 
 // WiFi & Firebase Credentials
-#define WIFI_SSID "Pranjal_2.4"
-#define WIFI_PASSWORD "PK@98400"
+#define WIFI_SSID "rons"
+#define WIFI_PASSWORD "12345678"
 #define API_KEY "AIzaSyCz6wSWlAj3TVCGNpIgQCXwnP33qZ8X31U"
 #define DATABASE_URL "https://pk-esp32-rtdb-default-rtdb.asia-southeast1.firebasedatabase.app/"
 
@@ -85,7 +85,7 @@ void loop()
     int ldrData = analogRead(LDR_PIN);
     float voltage = (float)analogReadMilliVolts(LDR_PIN) / 1000;
 
-    // 🔴 SEND DEVICE "last seen" TIMESTAMP
+    // SEND DEVICE "last seen" TIMESTAMP
     time_t now = time(nullptr); // Get current Unix timestamp from NTP
     if (Firebase.RTDB.setInt(&fbdo, "/device/last_seen", now))
     {
@@ -93,7 +93,7 @@ void loop()
     }
     else
     {
-      Serial.println("❌ Failed to update last seen: " + fbdo.errorReason());
+      Serial.println("Failed to update last seen: " + fbdo.errorReason());
     }
 
     // Send LDR data
