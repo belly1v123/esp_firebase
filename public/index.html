@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-  
+
   <style>
     body {
       font-family: sans-serif;
@@ -30,35 +30,34 @@
 </head>
 
 <body>
+  <marquee behavior="scroll" direction="left" scrollamount="10">This project is underdevelopment</marquee>
+    <h1>ESP32 LED Controller</h1>
 
   <h2>ESP32 LED Controller</h2>
 
-<!-- Toggle Button -->
-<h3>Digital LED Switch</h3>
-<label class="switch">
-  <input type="checkbox" id="toggleSwitch">
-  <span class="slider"></span>
-</label>
-<p id="digitalStatus">Status: --</p>
+  <!-- Toggle Button -->
+  <h3>Digital LED Switch</h3>
+  <label class="switch">
+    <input type="checkbox" id="toggleSwitch">
+    <span class="slider"></span>
+  </label>
+  <p id="digitalStatus">Status: --</p>
 
 
-<!-- PWM Control -->
-<h3>Analog PWM</h3>
-<input type="range" id="pwmSlider" min="0" max="255" />
-<p id="pwmValue">PWM: 0</p>
+  <!-- PWM Control -->
+  <h3>Analog PWM</h3>
+  <input type="range" id="pwmSlider" min="0" max="255" />
+  <p id="pwmValue">PWM: 0</p>
 
-<!-- Sensor Values -->
-<h3>LDR Sensor</h3>
-<p id="ldrValue">LDR: --</p>
-<p id="voltageValue">Voltage: -- V</p>
+  <!-- Sensor Values -->
+  <h3>LDR Sensor</h3>
+  <p id="ldrValue">LDR: --</p>
+  <p id="voltageValue">Voltage: -- V</p>
 
   <div class="status">
     <p id="espStatus">Checking ESP32 status...</p>
     <p id="lastSeen"></p>
   </div>
-
-
-  <!-- External JavaScript -->
 
 </body>
 

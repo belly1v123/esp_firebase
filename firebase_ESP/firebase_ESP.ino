@@ -5,10 +5,17 @@
 #include <time.h>
 
 // WiFi & Firebase Credentials
+<<<<<<< HEAD
 #define WIFI_SSID "rons"
 #define WIFI_PASSWORD "12345678"
 #define API_KEY "AIzaSyCz6wSWlAj3TVCGNpIgQCXwnP33qZ8X31U"
 #define DATABASE_URL "https://pk-esp32-rtdb-default-rtdb.asia-southeast1.firebasedatabase.app/"
+=======
+#define WIFI_SSID "Pranjal_2.4"
+#define WIFI_PASSWORD "PK@98400"
+#define API_KEY "yourKey"
+#define DATABASE_URL "https:yourDatabaseURL"
+>>>>>>> 8bdfcb7b800e3352e041e942e7fbe4c7f3e8478f
 
 // GPIO Definitions
 #define LED_ANALOG_PIN 12  // For ledcWrite()
